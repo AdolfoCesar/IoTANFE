@@ -121,23 +121,30 @@ def noise_sensor():
     print('Detecting sound...')
     
     while True:
-        print('Sound Value is: {0}'.format(sensor.sound))
+        data_noise = float(format(sensor.sound))
+        print('Sound Value is: {0}',data_noise)
         time.sleep(0.3)
         
         cursor.execute("INSERT INTO captured_noise(decibels) VALUES (%s)", [format(sensor.sound)])
         database.commit()
         led_delay=0.05
         
-        if(float (format(sensor.sound))<10.0):
+        if(data_noise<10.0):
             sendbar([0,0,0,0,0,0,0,0,1,1],led_delay)
-        elif(float(format(sensor.sound))>10.0 or float(format(sensor.sound))<19.0):
+            
+        elif(data_noise>10.0 and data_noise<19.0):
             sendbar([0,0,0,0,0,0,1,1,1,1],led_delay)
-        elif(float(format(sensor.sound))>20.0 or float(format(sensor.sound))<29.0):
+            
+        elif(data_noise>20.0 and data_noise<29.0):
             sendbar([0,0,0,0,1,1,1,1,1,1],led_delay)
-        elif(float(format(sensor.sound))>30.0 or float(format(sensor.sound))<35.0):
+            
+        elif(data_noise>30.0 and data_noise<35.0):
+            
             sendbar([0,0,1,1,1,1,1,1,1,1],led_delay)
-        elif(float(format(sensor.sound))>35.0 or float(format(sensor.sound))<50.0):
+            
+        else:   
             sendbar([1,1,1,1,1,1,1,1,1,1],led_delay)
+            
             
             FROM = "chillafterstudy@gmail.com"
             TO = "uxuegarciaugarte@opendeusto.es" #email of farmer
